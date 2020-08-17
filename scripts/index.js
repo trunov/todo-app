@@ -8,7 +8,6 @@ const items = [
 const itemTemplate = document.querySelector('#todolist-item-template').content.children[0];
 // const list = document.querySelector('.todolist');
 
-console.log(itemTemplate);
 
 class TodoItem {
   constructor(text, copyClickHandler) {
@@ -25,7 +24,10 @@ class TodoItem {
     this._view = itemTemplate.cloneNode(true);
     this._view.querySelector('.todolist-item__text').textContent = this._text;
     this._view.querySelector('.todolist-item__del').addEventListener('click', this._remove);
-    this._view.querySelector('.todolist-item__copy').addEventListener('click', () => { console.log('copy') });
+   
+    this._view.querySelector('.todolist-item__copy').addEventListener('click', () => {
+      this._copyClickHandler(this._text)
+    });
 
     return this._view;
   }
@@ -39,7 +41,7 @@ class TodoList {
   }
 
   _addItem = (text) => {
-    const item = this._createItem(text).getView();
+    const item = this._createItem(text, (text) => {this._addItem(text)}).getView();
     this._view.append(item);
   }
 
@@ -74,6 +76,7 @@ class TodoForm {
       e.preventDefault();
       const inputValue = this._view.querySelector('.todolist-form_input').value;
       this._submitHandler(inputValue);
+      this._view.reset();
     })
     return this._view;
   }
@@ -86,9 +89,3 @@ const list = (new TodoList(items, createItem, createForm)).getView();
 
 const page = document.querySelector('.page');
 page.append(list);
-
-// items.forEach(text => {
-//   const item = new TodoItem(text);
-//   console.log('item', item);
-//   list.append(item.getView());
-// })
