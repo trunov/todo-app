@@ -32,10 +32,10 @@ class TodoItem {
 }
 
 class TodoList {
-  constructor(data, createItem) {
+  constructor(data, createItem, createForm) {
     this._data = data;
     this._createItem = createItem;
-
+    this._createForm = createForm;
   }
 
   _addItem = (text) => {
@@ -43,17 +43,38 @@ class TodoList {
     this._view.append(item);
   }
 
+  _addForm = () => {
+    const form = this._createForm().getView();
+    this._view.append(form);
+  }
+
   getView() {
     const listTemplate = document.querySelector('#todolist-template').content.children[0];
     this._view = listTemplate.cloneNode(true);
 
+    this._addForm();
     this._data.forEach(this._addItem);
     return this._view;
   }
 }
 
+class TodoForm {
+  constructor(submitHandler) {
+    this._submitHandler = submitHandler;
+  }
+
+  getView() {
+    const formTemplate = document.querySelector('#todolist-form-template').content.children[0];
+    this._view = formTemplate.cloneNode(true);
+    this._view.addEventListener('submit', () => {console.log('submit')})
+    return this._view;
+  }
+}
+
 const createItem = (...args) => new TodoItem(...args);
-const list = (new TodoList(items, createItem)).getView();
+const createForm = (...args) => new TodoForm(...args);
+
+const list = (new TodoList(items, createItem, createForm)).getView();
 
 const page = document.querySelector('.page');
 page.append(list);
