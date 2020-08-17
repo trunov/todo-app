@@ -44,16 +44,20 @@ class TodoList {
   }
 
   _addForm = () => {
-    const form = this._createForm().getView();
-    this._view.append(form);
+    const form = this._createForm( (text) => {this._addItem(text)}).getView();
+    this._formContainer.append(form);
   }
 
   getView() {
     const listTemplate = document.querySelector('#todolist-template').content.children[0];
     this._view = listTemplate.cloneNode(true);
+    this._itemsContainer = this._view.querySelector('.todolist__container');
+    this._formContainer = this._view.querySelector('.todolist__form');
 
     this._addForm();
     this._data.forEach(this._addItem);
+
+
     return this._view;
   }
 }
@@ -66,7 +70,11 @@ class TodoForm {
   getView() {
     const formTemplate = document.querySelector('#todolist-form-template').content.children[0];
     this._view = formTemplate.cloneNode(true);
-    this._view.addEventListener('submit', () => {console.log('submit')})
+    this._view.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const inputValue = this._view.querySelector('.todolist-form_input').value;
+      this._submitHandler(inputValue);
+    })
     return this._view;
   }
 }
