@@ -7,9 +7,9 @@
 }
 
 .todolist {
-  width: 700px;
+  max-width: 700px;
   margin: 0 auto;
-  padding: 96px 0 12px;
+  padding: 96px 40px 12px;
 }
 
 h1 {
@@ -56,7 +56,7 @@ h1 {
   border: 1px solid #6F6F6F;
   box-sizing: border-box;
   border-radius: 5px;
-  padding: 40px;
+  padding: 30px;
   margin-bottom: 10px;
 }
 
@@ -86,4 +86,46 @@ h1 {
   border: none;
   margin-left: 30px;
   cursor: pointer;
+}
+
+@media screen and (max-width: 620px) {
+  .todolist-form {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .todolist-form_submit {
+    width: 200px;
+    margin: auto;
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .todolist-form_input {
+    margin-bottom: 30px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .todolist-item__text {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  h1 {
+    font-size: 48px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .todolist-form_input {
+    font-size: 20px;
+  }
+}
+
+.todolist-form_input::placeholder {
+  color: #4f3fec;
 }
